@@ -1,4 +1,4 @@
-
+# removes duplicates if they are consecutive 
 def destutter(ary)
 	x=0
 	ary_amended =[]

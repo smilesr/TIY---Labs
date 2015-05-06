@@ -1,5 +1,5 @@
 # generate random number between 1-100
-r = rand(1..3)
+r = rand(1..100)
 g = 0
 	until g == r	
 	# ask user for their guess of the random number

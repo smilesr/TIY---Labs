@@ -1,0 +1,68 @@
+# Function for translating english word to NATO equivalent
+def translate_to_NATO_function(word, my_alpha)
+	result=[]
+	word.each_char do |x|
+		result.push(my_alpha[x])
+	end
+	puts result.join(' ')
+end
+
+# Function for translating NATO message into english
+def translate_to_English_function(my_alpha, words)
+	result=[]
+	words.each do |word|
+		result.push(my_alpha.key(word))
+	end
+	puts result.join('')
+end
+
+my_alpha = {
+	"a" => "alpha",
+	"b" => "bravo",
+	"c" => "charlie",
+	"d" => "delta",
+	"e" => "echo",
+	"f" => "foxtrot",
+	"g" => "golf",
+	"h" => "hotel",
+	"i" => "india",
+	"j" => "juliett",
+	"k" => "kilo ",
+	"l" => "lima",
+	"m" => "mike",
+	"n" => "november",
+	"o" => "oscar",
+	"p" => "papa",
+	"q" => "quebec",
+	"r" => "romeo",
+	"s" => "sierra",
+	"t" => "tango",
+	"u" => "uniform",
+	"v" => "victor",
+	"w" => "whiskey",
+	"x" => "xray",
+	"y" => "yankee",
+	"z" => "zulu",
+	"1" => "1",
+	"2" => "2",
+	"3" => "3",
+	"4" => "4",
+	"5" => "5",
+	"6" => "6",
+	"7" => "7",
+	"8" => "8",
+	"9" => "9"
+	}
+
+puts "Do you want to translate from (1) English to NATO or (2) NATO to English: enter number"
+which_language = gets.chomp
+if which_language == "1"
+	puts "Enter a word to translate into NATO format"
+	word = gets.chomp
+	translate_to_NATO_function(word, my_alpha)
+elsif which_language == "2"
+	puts "Enter a 'word' to translate into English"
+	word = gets.chomp
+	words = word.split
+	translate_to_English_function(my_alpha, words)
+end

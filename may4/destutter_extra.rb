@@ -1,3 +1,4 @@
+# removes all duplicates even if not consecutive
 ary = [1,2,3,4,5,1]
 ary_amended = []
 ary.each do |y|

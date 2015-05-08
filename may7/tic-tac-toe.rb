@@ -9,55 +9,64 @@ def game_board()
 	puts "#{x}|#{x}|#{x}"
 end
 
-def human_move_selection()
-	puts "Make your selection by typing in the number of the space that you want your 'x' to appear"
-	selection = gets.chomp
-end
-
-
-def move_tracking(board_array, human_move_selection)
-	selection = human_move_selection
-	if selection (1 .. 3)
-		board_array[0][selection-1] = selection unless board_array[0][selection-1] != 0
-	elsif selection (4 .. 6)
-		board_array[1][selection-4] = selection unless board_array[0][selection-1] != 0
-	elsif selection (7 .. 9)
-		board_array[2][selection-7] = selection unless board_array[0][selection-1] != 0
-	else
-		puts "pick again"
+def human_turn (all_selections)
+	puts "your turn"
+	puts "make selection"
+	selection = gets.chomp.to_i
+	until valid_selection(all_selections, selection)
+		puts "that space is either already taken or outside the range of the board"
+		puts "make another selection:"
+		selection = gets.chomp.to_i
 	end
-	puts board_array
+	selection
 end
 
-def mode()
-	puts "Which mode do you want to play: (1) you vs computer, (2) you vs another human, or (3) computer vs computer - enter a number"
-	mode = gets.chomp.to_i
+def valid_selection (all_selections, selection)
+	number_range = (1..9).include?(selection)
+	already_selected = !all_selections.include?(selection)
+	number_range && already_selected
 end
 
-
-#def human_vs_computer()
-#	puts "Make your selection by typing in the number of the space that you want your 'x' to appear"
-#	selection = gets.chomp
-#end
-
-def computer_move_generator()
+def computer_turn
+	puts "computer's turn"
 	selection = rand(1..9)
+	puts selection
 end
 
 
-def tic_tac_toe()
-	turns = 10
-	board_array =[[0,0,0],[0,0,0],[0,0,0]]
-	until turns ==0
-		mode()	
-		human_move_selection
-		puts human_move_selection
-		move_tracking(board_array, human_move_selection)
-#human_vs_computer()
-#board_array_function(board_array,selection)
-		game_board()
-		turns -= 1
+def update_board (selection, board_array)
+	if selection.between?(1,3) 
+		board_array[0][selection-1] = "X" 
+	elsif selection.between?(4,6)
+		board_array[1][selection-4] = "X"
+	elsif selection.between?(7,9)
+		board_array[2][selection-7] = "X"
 	end
 end
 
-tic_tac_toe()
+def display_board (board_array)	
+	print board_array[0][0..2]
+	puts
+	print board_array[1][0..2]
+	puts
+	print board_array[2][0..2]
+	puts
+end
+
+def did_somebody_win(board_array)
+end
+
+def play_hangman
+	board_array =[[0,0,0],[0,0,0],[0,0,0]]
+	all_selections = Set.new
+	x=1
+	until x == 10	
+		selection = human_turn(all_selections)
+		#puts "passed point 1"
+		update_board(selection, board_array)
+		display_board(board_array)
+		x +=1
+	end
+end
+
+play_hangman

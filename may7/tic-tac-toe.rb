@@ -1,9 +1,10 @@
 require 'pry'
 require 'set'
 
-def human_turn (all_selections)
-	puts "your turn!"
-	puts "make selection"
+def human_turn (all_selections, turn_tracker)
+  if turn_tracker.odd?; x="X" else x="O" end
+	puts "your turn player #{{x}}!"
+	puts "select your space by typing 1-9"
 	selection = gets.chomp.to_i
 	until valid_selection(all_selections, selection)
 		puts "that space is either already taken or outside the range of the board"
@@ -11,6 +12,8 @@ def human_turn (all_selections)
 		selection = gets.chomp.to_i
 	end
 	all_selections.add(selection)
+  if x="X" selections_of_player_X(selection): end
+  if x="O" selections_of_player_O(selection); end
 	puts "at the end of human turn #{all_selections.to_a}"
 	selection
 end
@@ -28,8 +31,9 @@ def computer_turn
 end
 
 
-def update_board (selection, board_array)
-  if turn_tracker.even?
+def update_board (selection, board_array, turn_tracker)
+  puts selection
+  if turn_tracker.odd?
 	 if selection.between?(1,3) 
 	   	board_array[0][selection-1] = "X" 
 	 elsif selection.between?(4,6)
@@ -45,6 +49,7 @@ def update_board (selection, board_array)
    elsif selection.between?(7,9)
       board_array[2][selection-7] = "0"
     end
+  end
 end
 
 def display_board (board_array)	
@@ -63,7 +68,7 @@ def display_board (board_array)
 end
 
 def did_somebody_win(all_selections) 
-  puts "at somebody win #{all_selections.to_a}"
+  #puts "TEST: at somebody win #{all_selections.to_a}"
   #choices = all_selections.to_set
   win1 = Set.new [1,2,3]
   win2 = Set.new [1,5,9]
@@ -92,10 +97,10 @@ def play_hangman (mode)
 	all_selections = Set.new
   turn_tracker = 0
   x=0
-  until x=10
+  until x==10
     if mode ==1
       turn_tracker +=1
-      selection = human_turn(all_selections)
+      selection = human_turn(all_selections, turn_tracker)
     elsif mode ==2
       turn_tracker += 1
       if turn_tracker.even? 
@@ -110,12 +115,13 @@ def play_hangman (mode)
       puts "you didn't select a proper mode"
     end
 		#puts "passed point 1"
-		update_board(selection, board_array)
+		update_board(selection, board_array, turn_tracker)
 		display_board(board_array)
     did_somebody_win(all_selections)
+    x +=1
 	end
 end
 
 puts "which mode are you playing: (1) you vs. computer, (2) you vs. another human, or (3) computer vs. computer: enter a number"
-mode = gets.chomp
+mode = gets.chomp.to_i
 play_hangman (mode)

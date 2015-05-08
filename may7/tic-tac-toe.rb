@@ -44,6 +44,7 @@ def update_board (selection, board_array)
       board_array[1][selection-4] = "0"
    elsif selection.between?(7,9)
       board_array[2][selection-7] = "0"
+    end
 end
 
 def display_board (board_array)	

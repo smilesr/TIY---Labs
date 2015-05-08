@@ -29,13 +29,21 @@ end
 
 
 def update_board (selection, board_array)
-	if selection.between?(1,3) 
-		board_array[0][selection-1] = "X" 
-	elsif selection.between?(4,6)
-		board_array[1][selection-4] = "X"
-	elsif selection.between?(7,9)
-		board_array[2][selection-7] = "X"
-	end
+  if turn_tracker.even?
+	 if selection.between?(1,3) 
+	   	board_array[0][selection-1] = "X" 
+	 elsif selection.between?(4,6)
+	   	board_array[1][selection-4] = "X"
+	 elsif selection.between?(7,9)
+	   	board_array[2][selection-7] = "X"
+	 end
+  else
+    if selection.between?(1,3) 
+      board_array[0][selection-1] = "0" 
+   elsif selection.between?(4,6)
+      board_array[1][selection-4] = "0"
+   elsif selection.between?(7,9)
+      board_array[2][selection-7] = "0"
 end
 
 def display_board (board_array)	
@@ -55,6 +63,7 @@ end
 
 def did_somebody_win(all_selections) 
   puts "at somebody win #{all_selections.to_a}"
+  #choices = all_selections.to_set
   win1 = Set.new [1,2,3]
   win2 = Set.new [1,5,9]
   win3 = Set.new [1,4,7]
@@ -63,8 +72,10 @@ def did_somebody_win(all_selections)
   win6 = Set.new [3,6,9]
   win7 = Set.new [4,5,6]
   win8 = Set.new [7,8,9]
-  if win1.subset?(all_selections.to_set) ||  win2.subset?(all_selections.to_set) ||  win3.subset?(all_selections.to_set) || win4.subset?(all_selections.to_set) || win5.subset?(all_selections.to_set) || win6.subset?(all_selections.to_set) || win7.subset?(all_selections.to_set) || win8.subset?(all_selections.to_set)
-    puts "you win"
+  if (win1.subset?(all_selections.to_set) ||  win2.subset?(all_selections.to_set) ||  win3.subset?(all_selections.to_set) ||
+      win4.subset?(all_selections.to_set) || win5.subset?(all_selections.to_set) || win6.subset?(all_selections.to_set) ||
+      win7.subset?(all_selections.to_set) || win8.subset?(all_selections.to_set))
+      puts "you win"
   end   
 end
   #winning_combinations = Array.new [[win1],[[win2]],[[win3]], [[win4]],[[win5]],[[win6]],[[win7]],[[win8]]]
@@ -75,20 +86,35 @@ end
    # end
   #end
 
-def play_hangman
+def play_hangman (mode)
 	board_array =[[0,0,0],[0,0,0],[0,0,0]]
 	all_selections = Set.new
-	x=1
-  #  until game_finished?(guesses, word, turn_count)
-
-	until x == 10	
-		selection = human_turn(all_selections)
+  turn_tracker = 0
+  x=0
+  until x=10
+    if mode ==1
+      turn_tracker +=1
+      selection = human_turn(all_selections)
+    elsif mode ==2
+      turn_tracker += 1
+      if turn_tracker.even? 
+        selection = human_turn(all_selections)
+      else
+        selection = computer_turn(all_selections)
+      end
+    elsif mode ==3
+      turn_tracker +=1
+      selection = computer_turn(all_selections)
+    else
+      puts "you didn't select a proper mode"
+    end
 		#puts "passed point 1"
 		update_board(selection, board_array)
 		display_board(board_array)
     did_somebody_win(all_selections)
-		x +=1
 	end
 end
 
-play_hangman
+puts "which mode are you playing: (1) you vs. computer, (2) you vs. another human, or (3) computer vs. computer: enter a number"
+mode = gets.chomp
+play_hangman (mode)

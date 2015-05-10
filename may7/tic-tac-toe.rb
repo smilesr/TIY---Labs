@@ -4,9 +4,11 @@ require 'set'
 def human_turn (selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
   if turn_tracker.odd?; x="X" else x="O" end
   clear_screen
-  display_board(board_array)
 	puts "It is your turn Player #{x}"
-	puts "Review the above table and then select your space by typing 1-9"
+  puts
+  display_board(board_array)
+	puts
+  puts "Review the above table and then select your space by typing 1-9:"
 	selection = gets.chomp.to_i
 	until valid_selection(selections_of_player_X, selections_of_player_O, selection)
 		puts "that space is either already taken or outside the range of the board"
@@ -84,6 +86,7 @@ def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracke
   #choices = all_selections.to_set
   #puts "this is selections of x: #{selections_of_player_X.to_a}"
   #puts "this is selections of o: #{selections_of_player_O.to_a}"
+  # => winner = "nobody"
   puts turn_tracker
   win1 = Set.new [1,2,3]
   win2 = Set.new [1,5,9]
@@ -96,13 +99,16 @@ def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracke
   if (win1.subset?(selections_of_player_X.to_set) ||  win2.subset?(selections_of_player_X.to_set) ||  win3.subset?(selections_of_player_X.to_set) ||
       win4.subset?(selections_of_player_X.to_set) || win5.subset?(selections_of_player_X.to_set) || win6.subset?(selections_of_player_X.to_set) ||
       win7.subset?(selections_of_player_X.to_set) || win8.subset?(selections_of_player_X.to_set))
-      puts "you win"
-  end 
-  if (win1.subset?(selections_of_player_O.to_set) ||  win2.subset?(selections_of_player_O.to_set) ||  win3.subset?(selections_of_player_O.to_set) ||
+      winner = "X"
+ elsif 
+     (win1.subset?(selections_of_player_O.to_set) ||  win2.subset?(selections_of_player_O.to_set) ||  win3.subset?(selections_of_player_O.to_set) ||
       win4.subset?(selections_of_player_O.to_set) || win5.subset?(selections_of_player_O.to_set) || win6.subset?(selections_of_player_O.to_set) ||
       win7.subset?(selections_of_player_O.to_set) || win8.subset?(selections_of_player_O.to_set))
-      puts "you win"
-  end   
+      winner = "O"
+  else
+      winner = "nobody"
+  end 
+  return winner  
 end
   #winning_combinations = Array.new [[win1],[[win2]],[[win3]], [[win4]],[[win5]],[[win6]],[[win7]],[[win8]]]
   #winning_combinations.each do |x|
@@ -114,7 +120,7 @@ end
 
 def clear_screen
   counter=0 
-  until counter == 10 
+  until counter == 20 
     puts " "
     counter += 1
   end
@@ -127,8 +133,8 @@ def play_hangman (mode)
   selections_of_player_O = Set.new
   turn_tracker = 0
   x=0
-
-  until x==10
+  winner = "nobody"
+  until winner != "nobody"
     if mode ==1
       turn_tracker +=1
       selection = human_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
@@ -148,16 +154,19 @@ def play_hangman (mode)
 		#puts "passed point 1"
     if turn_tracker.odd?
       selections_of_player_X = keep_track_of_selections_of_player_X(selection,selections_of_player_X)
-      puts "the odd branch in the play hangman function"
+#      puts "the odd branch in the play hangman function"
     else
       selections_of_player_O = keep_track_of_selections_of_player_O(selection,selections_of_player_O)
-      puts "the even branch in the play hangman function"
+#      puts "the even branch in the play hangman function"
     end
 		update_board(selection, board_array, turn_tracker)
 		display_board(board_array)
-    did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker)
+    winner = did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker).to_s
+    puts winner
     x +=1
 	end
+clear_screen
+puts "CONGRATULATIONS PLAYER #{winner}. YOU ARE THE WINNER."  
 end
 
 
@@ -172,6 +181,6 @@ puts "1 - you vs. another human"
 puts "2 - you vs. the computer"
 puts "3 - computer vs. computer"  
 puts
-puts "Please enter a number 1-3 to indicate the proper mode:"
+puts "Please enter a number 1-3 to indicate the mode:"
 mode = gets.chomp.to_i
 play_hangman (mode)

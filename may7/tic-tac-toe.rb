@@ -28,16 +28,20 @@ end
 
 def valid_selection (selections_of_player_X, selections_of_player_O, selection)
 	number_range = (1..9).include?(selection)
-	already_selected = !selections_of_player_X.include?(selection) || !selections_of_player_O.include?(selection) 
+	already_selected = !selections_of_player_X.include?(selection) && !selections_of_player_O.include?(selection) 
 	number_range && already_selected
 end
 
-def computer_turn
-	puts "computer's turn"
-	selection = rand(1..9)
-	puts selection
+def computer_turn (selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
+  #if turn_tracker.odd?; x="X" else x="O" end
+  selection = rand(1..9)
+  clear_screen
+  until valid_selection(selections_of_player_X, selections_of_player_O, selection)
+    selection = rand(1..9)
+  end
+  #all_selections.add(selection)
+  selection
 end
-
 
 def update_board (selection, board_array, turn_tracker)
   puts selection
@@ -96,12 +100,12 @@ def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracke
   win6 = Set.new [3,6,9]
   win7 = Set.new [4,5,6]
   win8 = Set.new [7,8,9]
-  if (win1.subset?(selections_of_player_X.to_set) ||  win2.subset?(selections_of_player_X.to_set) ||  win3.subset?(selections_of_player_X.to_set) ||
+  if (win1.subset?(selections_of_player_X.to_set) || win2.subset?(selections_of_player_X.to_set) || win3.subset?(selections_of_player_X.to_set) ||
       win4.subset?(selections_of_player_X.to_set) || win5.subset?(selections_of_player_X.to_set) || win6.subset?(selections_of_player_X.to_set) ||
       win7.subset?(selections_of_player_X.to_set) || win8.subset?(selections_of_player_X.to_set))
       winner = "X"
  elsif 
-     (win1.subset?(selections_of_player_O.to_set) ||  win2.subset?(selections_of_player_O.to_set) ||  win3.subset?(selections_of_player_O.to_set) ||
+     (win1.subset?(selections_of_player_O.to_set) || win2.subset?(selections_of_player_O.to_set) || win3.subset?(selections_of_player_O.to_set) ||
       win4.subset?(selections_of_player_O.to_set) || win5.subset?(selections_of_player_O.to_set) || win6.subset?(selections_of_player_O.to_set) ||
       win7.subset?(selections_of_player_O.to_set) || win8.subset?(selections_of_player_O.to_set))
       winner = "O"
@@ -132,7 +136,6 @@ def play_hangman (mode)
   selections_of_player_X = Set.new
   selections_of_player_O = Set.new
   turn_tracker = 0
-  x=0
   winner = "nobody"
   until winner != "nobody"
     if mode ==1
@@ -140,10 +143,10 @@ def play_hangman (mode)
       selection = human_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
     elsif mode ==2
       turn_tracker += 1
-      if turn_tracker.even? 
-        selection = human_turn(selections_of_player_X, selections_of_player_O)
+      if turn_tracker.odd? 
+        selection = human_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
       else
-        selection = computer_turn(selections_of_player_X, selections_of_player_O)
+        selection = computer_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
       end
     elsif mode ==3
       turn_tracker +=1
@@ -163,7 +166,6 @@ def play_hangman (mode)
 		display_board(board_array)
     winner = did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker).to_s
     puts winner
-    x +=1
 	end
 clear_screen
 puts "CONGRATULATIONS PLAYER #{winner}. YOU ARE THE WINNER."  

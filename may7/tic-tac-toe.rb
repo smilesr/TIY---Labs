@@ -3,7 +3,7 @@ require 'set'
 
 def human_turn (all_selections, turn_tracker)
   if turn_tracker.odd?; x="X" else x="O" end
-	puts "your turn player #{{x}}!"
+	puts "your turn player #{x}"
 	puts "select your space by typing 1-9"
 	selection = gets.chomp.to_i
 	until valid_selection(all_selections, selection)
@@ -12,8 +12,8 @@ def human_turn (all_selections, turn_tracker)
 		selection = gets.chomp.to_i
 	end
 	all_selections.add(selection)
-  if x="X" selections_of_player_X(selection): end
-  if x="O" selections_of_player_O(selection); end
+  if x=="X"; selections_of_player_X(selection) end
+  if x=="O"; selections_of_player_O(selection) end 
 	puts "at the end of human turn #{all_selections.to_a}"
 	selection
 end

@@ -137,7 +137,7 @@ def play_hangman (mode)
   selections_of_player_O = Set.new
   turn_tracker = 0
   winner = "nobody"
-  until winner != "nobody"
+  until winner != "nobody" || turn_tracker == 9
     if mode ==1
       turn_tracker +=1
       selection = human_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
@@ -169,10 +169,11 @@ def play_hangman (mode)
 		update_board(selection, board_array, turn_tracker)
 		display_board(board_array)
     winner = did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker).to_s
-    puts winner unless winner == "nobody"
+    #puts winner unless winner == "nobody"
 	end
 clear_screen
-puts "CONGRATULATIONS PLAYER #{winner}. YOU ARE THE WINNER."  
+if turn_tracker == 9 then puts "SCRATCH GAME." end
+if winner != "nobody" then puts "CONGRATULATIONS PLAYER #{winner}. YOU ARE THE WINNER." end
 end
 
 

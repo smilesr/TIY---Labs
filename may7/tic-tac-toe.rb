@@ -1,10 +1,12 @@
 require 'pry'
 require 'set'
 
-def human_turn (selections_of_player_X, selections_of_player_O, turn_tracker)
+def human_turn (selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
   if turn_tracker.odd?; x="X" else x="O" end
-	puts "your turn player #{x}"
-	puts "select your space by typing 1-9"
+  clear_screen
+  display_board(board_array)
+	puts "It is your turn Player #{x}"
+	puts "Review the above table and then select your space by typing 1-9"
 	selection = gets.chomp.to_i
 	until valid_selection(selections_of_player_X, selections_of_player_O, selection)
 		puts "that space is either already taken or outside the range of the board"
@@ -80,8 +82,8 @@ end
 def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker) 
   #puts "TEST: at somebody win #{all_selections.to_a}"
   #choices = all_selections.to_set
-  puts "this is selections of x: #{selections_of_player_X.to_a}"
-  puts "this is selections of o: #{selections_of_player_O.to_a}"
+  #puts "this is selections of x: #{selections_of_player_X.to_a}"
+  #puts "this is selections of o: #{selections_of_player_O.to_a}"
   puts turn_tracker
   win1 = Set.new [1,2,3]
   win2 = Set.new [1,5,9]
@@ -110,18 +112,26 @@ end
    # end
   #end
 
+def clear_screen
+  counter=0 
+  until counter == 10 
+    puts " "
+    counter += 1
+  end
+end
+
 def play_hangman (mode)
-	board_array =[[0,0,0],[0,0,0],[0,0,0]]
+	board_array =[[1,2,3],[4,5,6],[7,8,9]]
 	#all_selections = Set.new
   selections_of_player_X = Set.new
   selections_of_player_O = Set.new
   turn_tracker = 0
   x=0
-  display_board(board_array)
+
   until x==10
     if mode ==1
       turn_tracker +=1
-      selection = human_turn(selections_of_player_X, selections_of_player_O, turn_tracker)
+      selection = human_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
     elsif mode ==2
       turn_tracker += 1
       if turn_tracker.even? 
@@ -150,6 +160,18 @@ def play_hangman (mode)
 	end
 end
 
-puts "which mode are you playing: (1) you vs. computer, (2) you vs. another human, or (3) computer vs. computer: enter a number"
+
+
+#************************START OF THE PROGRAM**************************
+clear_screen
+puts "WELCOME TO HANGMAN"
+puts
+puts "Which mode would you like to play in:"
+puts
+puts "1 - you vs. computer"
+puts "2 - you vs. another human"
+puts "3 - computer vs. computer"  
+puts
+puts "Please enter a number 1-3 to indicate the proper mode:"
 mode = gets.chomp.to_i
 play_hangman (mode)

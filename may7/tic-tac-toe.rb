@@ -77,9 +77,12 @@ def display_board (board_array)
 	#suts "#{x}|#{x}|#{x}"
 end
 
-def did_somebody_win(selections_of_player_X, selections_of_player_O) 
+def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker) 
   #puts "TEST: at somebody win #{all_selections.to_a}"
   #choices = all_selections.to_set
+  puts "this is selections of x: #{selections_of_player_X.to_a}"
+  puts "this is selections of o: #{selections_of_player_O.to_a}"
+  puts turn_tracker
   win1 = Set.new [1,2,3]
   win2 = Set.new [1,5,9]
   win3 = Set.new [1,4,7]
@@ -93,7 +96,7 @@ def did_somebody_win(selections_of_player_X, selections_of_player_O)
       win7.subset?(selections_of_player_X.to_set) || win8.subset?(selections_of_player_X.to_set))
       puts "you win"
   end 
-    if (win1.subset?(selections_of_player_O.to_set) ||  win2.subset?(selections_of_player_O.to_set) ||  win3.subset?(selections_of_player_O.to_set) ||
+  if (win1.subset?(selections_of_player_O.to_set) ||  win2.subset?(selections_of_player_O.to_set) ||  win3.subset?(selections_of_player_O.to_set) ||
       win4.subset?(selections_of_player_O.to_set) || win5.subset?(selections_of_player_O.to_set) || win6.subset?(selections_of_player_O.to_set) ||
       win7.subset?(selections_of_player_O.to_set) || win8.subset?(selections_of_player_O.to_set))
       puts "you win"
@@ -135,12 +138,14 @@ def play_hangman (mode)
 		#puts "passed point 1"
     if turn_tracker.odd?
       selections_of_player_X = keep_track_of_selections_of_player_X(selection,selections_of_player_X)
+      puts "the odd branch in the play hangman function"
     else
-      selections_of_player_X = keep_track_of_selections_of_player_O(selection,selections_of_player_O)
+      selections_of_player_O = keep_track_of_selections_of_player_O(selection,selections_of_player_O)
+      puts "the even branch in the play hangman function"
     end
 		update_board(selection, board_array, turn_tracker)
 		display_board(board_array)
-    did_somebody_win(selections_of_player_X, selections_of_player_O)
+    did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker)
     x +=1
 	end
 end

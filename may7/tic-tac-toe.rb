@@ -151,7 +151,10 @@ def play_hangman (mode)
       end
     elsif mode ==3
       turn_tracker +=1
-      selection = computer_turn(selections_of_player_X, selections_of_player_O)
+      selection = computer_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
+      if turn_tracker.odd? then puts "Computer Player X has selected #{selection}." end
+      sleep 4
+      if turn_tracker.even? then puts "Computer Player Y has selected #{selection}." end
     else
       puts "you didn't select a proper mode"
     end

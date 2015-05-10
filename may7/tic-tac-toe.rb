@@ -11,8 +11,8 @@ def human_turn (selections_of_player_X, selections_of_player_O, turn_tracker, bo
   puts "Review the above table and then select your space by typing 1-9:"
 	selection = gets.chomp.to_i
 	until valid_selection(selections_of_player_X, selections_of_player_O, selection)
-		puts "that space is either already taken or outside the range of the board"
-		puts "make another selection:"
+		puts "That selection is either already taken or outside the range of the board."
+		puts "Please make a new selection:"
 		selection = gets.chomp.to_i
 	end
 	#all_selections.add(selection)
@@ -91,7 +91,7 @@ def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracke
   #puts "this is selections of x: #{selections_of_player_X.to_a}"
   #puts "this is selections of o: #{selections_of_player_O.to_a}"
   # => winner = "nobody"
-  puts turn_tracker
+  puts# turn_tracker
   win1 = Set.new [1,2,3]
   win2 = Set.new [1,5,9]
   win3 = Set.new [1,4,7]
@@ -124,7 +124,7 @@ end
 
 def clear_screen
   counter=0 
-  until counter == 20 
+  until counter == 5 
     puts " "
     counter += 1
   end
@@ -147,6 +147,7 @@ def play_hangman (mode)
         selection = human_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
       else
         selection = computer_turn(selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
+        puts "The computer has taken space #{selection}."
       end
     elsif mode ==3
       turn_tracker +=1
@@ -165,7 +166,7 @@ def play_hangman (mode)
 		update_board(selection, board_array, turn_tracker)
 		display_board(board_array)
     winner = did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker).to_s
-    puts winner
+    puts winner unless winner == "nobody"
 	end
 clear_screen
 puts "CONGRATULATIONS PLAYER #{winner}. YOU ARE THE WINNER."  

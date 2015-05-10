@@ -168,8 +168,8 @@ puts "WELCOME TO HANGMAN"
 puts
 puts "Which mode would you like to play in:"
 puts
-puts "1 - you vs. computer"
-puts "2 - you vs. another human"
+puts "1 - you vs. another human"
+puts "2 - you vs. the computer"
 puts "3 - computer vs. computer"  
 puts
 puts "Please enter a number 1-3 to indicate the proper mode:"

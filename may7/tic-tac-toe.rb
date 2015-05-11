@@ -1,6 +1,7 @@
-require 'pry'
-require 'set'
+# this version only contains code for NORMAL version
 
+require 'set'
+# this function asks human player for selection
 def human_turn (selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
   if turn_tracker.odd?; x="X" else x="O" end
   clear_screen
@@ -15,34 +16,32 @@ def human_turn (selections_of_player_X, selections_of_player_O, turn_tracker, bo
 		puts "Please make a new selection:"
 		selection = gets.chomp.to_i
 	end
-	#all_selections.add(selection)
 	selection
 end
-
+# this function tracks all of player x's selections
 def keep_track_of_selections_of_player_X (selection,selections_of_player_X)
   selections_of_player_X.add(selection)
 end
+# this function tracks all of player o's selections
 def keep_track_of_selections_of_player_O (selection,selections_of_player_O)
   selections_of_player_O.add(selection)
 end
-
+# this function checks the input of human and computer to make sure it isn't out of range or a duplicate
 def valid_selection (selections_of_player_X, selections_of_player_O, selection)
 	number_range = (1..9).include?(selection)
 	already_selected = !selections_of_player_X.include?(selection) && !selections_of_player_O.include?(selection) 
 	number_range && already_selected
 end
-
+# this function makes a selection for the computer player
 def computer_turn (selections_of_player_X, selections_of_player_O, turn_tracker, board_array)
-  #if turn_tracker.odd?; x="X" else x="O" end
   selection = rand(1..9)
   clear_screen
   until valid_selection(selections_of_player_X, selections_of_player_O, selection)
     selection = rand(1..9)
   end
-  #all_selections.add(selection)
   selection
 end
-
+# this function keeps track of the selections in relation to the other player's
 def update_board (selection, board_array, turn_tracker)
   puts selection
   if turn_tracker.odd?
@@ -62,36 +61,44 @@ def update_board (selection, board_array, turn_tracker)
       board_array[2][selection-7] = "0"
     end
   end
-  #print board_array[0][0..2]
-  #puts
-  #print board_array[1][0..2]
-  #puts
-  #print board_array[2][0..2]
-  #puts
 end
-
+# this shows the game board
 def display_board (board_array)	
-	print board_array[0][0..2]
-	puts#
-	print board_array[1][0..2]
-	puts
-	print board_array[2][0..2]
-	puts
-	#x = "-"
-	#puts "#{x}|#{x}|#{x} "
-	#puts "-+-+-"
-	#puts "#{x}|#{x}|#{x}"
-	#puts "-+-+-"
-	#suts "#{x}|#{x}|#{x}"
-end
+  x=0
+  x1=Array.new
+  x2=Array.new ["-","+","-","+","-"]
+  x3=Array.new
+  x4=Array.new ["-","+","-","+","-"]
+  x5=Array.new
+	for x in 0..4
+    if x.odd? then x1[x]="|"
+      else x1[x] = board_array[0][x/2]
+    end
+  end
+  for x in 0..4
+    if x.odd? then x3[x]="|"
+      else x3[x] = board_array[1][x/2]
+    end
+  end
+  for x in 0..4 
+    if x.odd? then x5[x]="|"
+      else x5[x] = board_array[2][x/2]
+    end
+  end
 
+  print "#{x1[0]}#{x1[1]}#{x1[2]}#{x1[3]}#{x1[4]}"
+  puts
+  print  "#{x2[0]}#{x2[1]}#{x2[2]}#{x2[3]}#{x2[4]}" 
+  puts
+  print  "#{x3[0]}#{x3[1]}#{x3[2]}#{x3[3]}#{x3[4]}"
+  puts
+  print  "#{x4[0]}#{x4[1]}#{x4[2]}#{x4[3]}#{x4[4]}"
+  puts
+  print  "#{x5[0]}#{x5[1]}#{x5[2]}#{x5[3]}#{x5[4]}"
+end
+# this function checks to see if a player has won
 def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker) 
-  #puts "TEST: at somebody win #{all_selections.to_a}"
-  #choices = all_selections.to_set
-  #puts "this is selections of x: #{selections_of_player_X.to_a}"
-  #puts "this is selections of o: #{selections_of_player_O.to_a}"
-  # => winner = "nobody"
-  puts# turn_tracker
+  puts
   win1 = Set.new [1,2,3]
   win2 = Set.new [1,5,9]
   win3 = Set.new [1,4,7]
@@ -114,14 +121,7 @@ def did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracke
   end 
   return winner  
 end
-  #winning_combinations = Array.new [[win1],[[win2]],[[win3]], [[win4]],[[win5]],[[win6]],[[win7]],[[win8]]]
-  #winning_combinations.each do |x|
-   # if winning_combinations[x].to_set.subset?(all_selections)
-   #   puts "you win"
-   #   break
-   # end
-  #end
-
+# this function creates some space on the display to make screen easier to read
 def clear_screen
   counter=0 
   until counter == 5 
@@ -132,7 +132,6 @@ end
 
 def play_hangman (mode)
 	board_array =[[1,2,3],[4,5,6],[7,8,9]]
-	#all_selections = Set.new
   selections_of_player_X = Set.new
   selections_of_player_O = Set.new
   turn_tracker = 0
@@ -158,19 +157,18 @@ def play_hangman (mode)
     else
       puts "you didn't select a proper mode"
     end
-		#puts "passed point 1"
     if turn_tracker.odd?
       selections_of_player_X = keep_track_of_selections_of_player_X(selection,selections_of_player_X)
-#      puts "the odd branch in the play hangman function"
+
     else
       selections_of_player_O = keep_track_of_selections_of_player_O(selection,selections_of_player_O)
-#      puts "the even branch in the play hangman function"
+
     end
 		update_board(selection, board_array, turn_tracker)
 		display_board(board_array)
     winner = did_somebody_win(selections_of_player_X, selections_of_player_O, turn_tracker).to_s
-    #puts winner unless winner == "nobody"
 	end
+
 clear_screen
 if turn_tracker == 9 then puts "SCRATCH GAME." end
 if winner != "nobody" then puts "CONGRATULATIONS PLAYER #{winner}. YOU ARE THE WINNER." end

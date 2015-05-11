@@ -1,4 +1,4 @@
-# this version only contains code for NORMAL version
+# this version only contains code for NORMAL version 
 
 require 'set'
 # this function asks human player for selection

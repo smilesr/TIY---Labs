@@ -8,8 +8,6 @@ module IronYardGames
 
   RANK_VALUES = {J: 11, Q: 12, K: 13, A: 14}
 
-  # attr_reader :rank
-  # attr_writer :rank
   attr_accessor :rank, :suit
   include Comparable
 
@@ -26,22 +24,6 @@ module IronYardGames
   def <=>(other)
     self.value <=> other.value
   end
-
-  # def rank
-  #   @rank
-  # end
-
-  # def change_rank(new_rank)
-  #   @rank = new_rank
-  # end
-
-  # def rank=(new_rank)
-  #   @rank = new_rank
-  # end
-
-  # def suit
-  #   @suit
-  # end
   end
 end
 

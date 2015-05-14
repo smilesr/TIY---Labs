@@ -1,17 +1,18 @@
-require 'pry'
-
 module IronYardGames
-  include Enumerable
-  class Card
 
   RANKS = (2..10).to_a + [:J, :Q, :K, :A]
   SUITS = [:diamonds, :clubs, :spades, :hearts]
 
   RANK_VALUES = {J: 11, Q: 12, K: 13, A: 14}
 
+
+class Card
+
+
+
   attr_accessor :rank, :suit
   include Comparable
-
+  include Enumerable
   def initialize(rank=nil, suit=nil)
     @rank = rank || RANKS.sample
     @suit = suit || SUITS.sample
@@ -25,49 +26,42 @@ module IronYardGames
   def <=>(other)
     self.value <=> other.value
   end
-  end
+
 end
 
-class Deck
+ class Deck
 
-  attr_read :peek, :shuffle, :draw
+   include Enumerable
 
-  def initialize (draw)
-    @draw = draw
-    @peek = peek
-    @shuffle = shuffle
-    @card = Card.new(,)
-    @rank = Card.new()
-    @suit = Card.new()
-    #@et_card = Card.new
-
+  def initialize
+    @cards = []
+    RANKS.each do |rank|
+      SUITS.each do |suit|
+        @cards << Card.new(rank, suit)
+      end
+    end
   end
-
-  def deck_of_cards
-    @suits.each do |y|
-      @ranks.size.times do |x|
-        @deck_of_cards << card(ranks[x], suit)RANKrank.length @ ranks = %w{A 2 3 4 5 6 7 8 9 10 J Q K}
-  end
-end
-  def @draw
-      x= number.times do |variable|
-      binding.pry
-      #@deplete_deck(x)
-      x = @get_card
-      #@deplete_deck(x)
-      @draw.push
+    def shuf
+      @cards.shuffle!
     end
 
-  #def @deplete_deck(x)
-  #  @deplete_deck = @cards
-  #end
+    def peek
+      @cards[0]
+    end
 
-  def @get_card
-    @get_card = Card.new
-  end
+    def count
+      @cards.count
+    end
 
-  def @peek
-    @peek
+    def hand(x)
+      @cards.take(x)
+      @cards.shift(x)     
+    end
+    
+ end
+end
+
+
 
 
 # end

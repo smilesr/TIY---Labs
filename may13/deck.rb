@@ -1,6 +1,7 @@
 require 'pry'
 
 module IronYardGames
+  include Enumerable
   class Card
 
   RANKS = (2..10).to_a + [:J, :Q, :K, :A]
@@ -27,4 +28,46 @@ module IronYardGames
   end
 end
 
-binding.pry
+class Deck
+
+  attr_read :peek, :shuffle, :draw
+
+  def initialize (draw)
+    @draw = draw
+    @peek = peek
+    @shuffle = shuffle
+    @card = Card.new(,)
+    @rank = Card.new()
+    @suit = Card.new()
+    #@et_card = Card.new
+
+  end
+
+  def deck_of_cards
+    @suits.each do |y|
+      @ranks.size.times do |x|
+        @deck_of_cards << card(ranks[x], suit)RANKrank.length @ ranks = %w{A 2 3 4 5 6 7 8 9 10 J Q K}
+  end
+end
+  def @draw
+      x= number.times do |variable|
+      binding.pry
+      #@deplete_deck(x)
+      x = @get_card
+      #@deplete_deck(x)
+      @draw.push
+    end
+
+  #def @deplete_deck(x)
+  #  @deplete_deck = @cards
+  #end
+
+  def @get_card
+    @get_card = Card.new
+  end
+
+  def @peek
+    @peek
+
+
+# end

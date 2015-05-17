@@ -8,8 +8,11 @@ class Player
   # def selection
 
   # end
+  def player_setup (game_type)
+    if game_type ==
 
-  def choice
+
+  def choice (player_types)
     puts "Player #{letter}.  It is your turn. Look at the board above and make your selection by typing the number of any open space:"
     @selection = gets.chomp.to_i
     while !valid_choice
@@ -26,8 +29,8 @@ class Player
   end
 
   def valid_choice (board)
-    selection == available
-    selection == number
+    @selection == available
+    @selection == number
   end
 
   def play
@@ -38,5 +41,3 @@ class Player
     end
    end 
 end
-
-class 

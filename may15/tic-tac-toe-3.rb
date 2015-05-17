@@ -4,12 +4,28 @@ require './ttt-board.rb'
 class Game
   def initialize
     @turns = turns = 0
-    @player_types = player_types
+    @player_types = player_types = 0
   end
 
 def play
   pick_player_types
-  play_next_turn
+  if player_types == 1
+    while true
+      player.choice
+    end
+  elsif player_types ==2
+    while true
+      @turns += 1
+      if turns.odd?
+        player.choice
+      elsif turns.even?
+        player.auto_choice
+      end
+    end
+  elsif player_types == 3
+    while true
+      player.auto_choice
+    end
 end
 
 def pick_player_types
@@ -18,28 +34,28 @@ def pick_player_types
   puts "(3) you can see the outcome of the computer playing against itself"
   puts
   puts "Enter (1), (2) or (3) to make your selection:"
-  player_types = gets.chomp.to_i
-  until player_types == (1..3)
+  @player_types = gets.chomp.to_i
+  until @player_types == (1..3)
     puts "I'm sorry.  Your entry must be tbe number 1, 2 or 3.  Please select again."
-    x == gets.chomp.to_i
+    @player_types == gets.chomp.to_i
   end
 end
 
   def play_next_turn(player_types)
     if player_types == 1
-      player.choice
-      board.status
+      player.choice (player_types)
+#      board.status
     elsif player_types == 2
       turns += 1
       if turns.odd?
-        player.choice
-        board.status
+        player.choice(player_types)
+ #       board.status
       elsif turn.even?
-        player.auto_choice
+        player.auto_choice (player_types)
       end
     elsif player_types == 3
       player.auto_choice
-      board.status
+ #     board.status
     end
   end
 

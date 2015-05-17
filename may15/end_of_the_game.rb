@@ -1,4 +1,11 @@
-class the_end
+require './ttt-player.rb'
+require './ttt-board.rb'
+require './end_of_the_game.rb'
+
+class TheEnd
+
+  def initialize
+
   puts "GAME OVER!"
   puts ""
   puts "Would you like to play again? Type 'yes' or 'no':"
@@ -8,10 +15,12 @@ class the_end
     x = gets.chomp.downcase
   end
 
-  if x = "yes"
-    Game
+  if x == "yes"
+    Game.new
   else
     puts "Thanks for playing!"
   end
 
   end
+
+end

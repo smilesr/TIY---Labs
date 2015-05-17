@@ -18,8 +18,9 @@ class Board
       board_display
       create_temp_board
     end
-#   
+    TheEnd  
   end
+
 
   def board_display
     puts" #{board[0]}     |     #{board[1]}     |     #{board[2]}
@@ -40,28 +41,19 @@ class Board
   end
 
   def available (selection)
-    @board[selection].is_a? Fixnum
+    @board[selection].is_a? (Fixnum)
  #   @available_spaces = @temporary_check_board.find_all {|y| y>0}
  #  @selection.subset?(@available_spaces)
   end
 
   def create_temp_board
-    temporary_board = @board.each {|x| x.to_i
+    temporary_board = @board.each {|x| x.to_i}
     [1..9].each do |x|
       if ORIGINAL_BOARD[x] == @board[x]
         temp_board[x] = 0
       elsif ORIGINAL_BOARD[x] != @board[x]
-       temp_board[x] = ORIGINAL_BOARD[x]
+        temp_board[x] = ORIGINAL_BOARD[x]
       end
     end
   end
-
-
-
-
-
-
-
-
-
-end 
+end

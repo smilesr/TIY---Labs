@@ -1,5 +1,6 @@
 require './ttt-player.rb'
 require './ttt-board.rb'
+require './end_of_the_game.rb'
 
 class Game
   def initialize
@@ -27,6 +28,7 @@ def play
     while true
       player.computer
     end
+  end
 end
 
 def pick_player_types

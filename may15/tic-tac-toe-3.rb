@@ -11,20 +11,21 @@ def play
   pick_player_types
   if player_types == 1
     while true
-      player.choice
+      @turns += 1
+      player.human(turns)
     end
   elsif player_types ==2
     while true
       @turns += 1
       if turns.odd?
-        player.choice
+        player.human(turns)
       elsif turns.even?
-        player.auto_choice
+        player.computer
       end
     end
   elsif player_types == 3
     while true
-      player.auto_choice
+      player.computer
     end
 end
 
@@ -41,23 +42,23 @@ def pick_player_types
   end
 end
 
-  def play_next_turn(player_types)
-    if player_types == 1
-      player.choice (player_types)
-#      board.status
-    elsif player_types == 2
-      turns += 1
-      if turns.odd?
-        player.choice(player_types)
- #       board.status
-      elsif turn.even?
-        player.auto_choice (player_types)
-      end
-    elsif player_types == 3
-      player.auto_choice
- #     board.status
-    end
-  end
+#   def play_next_turn(player_types)
+#     if player_types == 1
+#       player.choice (player_types)
+# #      board.status
+#     elsif player_types == 2
+#       turns += 1
+#       if turns.odd?
+#         player.choice(player_types)
+#  #       board.status
+#       elsif turn.even?
+#         player.auto_choice (player_types)
+#       end
+#     elsif player_types == 3
+#       player.auto_choice
+#  #     board.status
+#     end
+#   end
 
 
 end

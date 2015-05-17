@@ -8,17 +8,17 @@ class Board
   def initialize
     @board = board
       @board = (1..9).to_a
+    @temporary_board = temporary_board = ORIGINAL_BOARD
   end
 
 
-  def board_status(selection, letter)
+  def status(selection, letter)
     until win? || scratch?
       @board[selection] = letter
-      binding.pry
       board_display
-      @board.each {|x| x.to_i}
+      create_temp_board
     end
-    tic.tac.toe-3    
+#   
   end
 
   def board_display
@@ -30,18 +30,33 @@ class Board
   end
 
   def win?
-    x = @board.to_set
+    x = @temporary_board.to_set
     y = WINNING_COMBOS.to_set
     y.subset?(x)
   end
 
   def scratch?
-    @board == nil
+    @temporary_board == nil
   end
 
-  def available
-    @board = @board.find_all {|y| y>0}
+  def available (selection)
+    @board[selection].is_a? Fixnum
+ #   @available_spaces = @temporary_check_board.find_all {|y| y>0}
+ #  @selection.subset?(@available_spaces)
   end
+
+  def create_temp_board
+    temporary_board = @board.each {|x| x.to_i
+    [1..9].each do |x|
+      if ORIGINAL_BOARD[x] == @board[x]
+        temp_board[x] = 0
+      elsif ORIGINAL_BOARD[x] != @board[x]
+       temp_board[x] = ORIGINAL_BOARD[x]
+      end
+    end
+  end
+
+
 
 
 

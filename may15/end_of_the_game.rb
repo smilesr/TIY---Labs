@@ -12,7 +12,6 @@ class the_end
     Game
   else
     puts "Thanks for playing!"
-    exit
   end
 
   end

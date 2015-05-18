@@ -2,7 +2,8 @@ require 'pry'
 require 'set'
 
 class Board
-
+  attr_accessor :board
+  attr_accessor :temporary_board
   WINNING_COMBOS = [[1,2,3], [1,5,9], [1,4,7], [2,5,8], [3,5,7], [3,6,9], [4,5,6], [7,8,9]]
   ORIGINAL_BOARD = [1,2,3,4,5,6,7,8,9]
   def initialize

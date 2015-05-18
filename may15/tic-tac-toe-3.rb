@@ -1,32 +1,39 @@
-require './ttt-player.rb'
-require './ttt-board.rb'
-require './end_of_the_game.rb'
+require './ttt-player'
+require './ttt-board'
+require './end_of_the_game'
+
+require 'pry'
+include Comparable
 
 class Game
+attr_accessor :player
+attr_accessor :turns
+
   def initialize
     @turns = turns = 0
     @player_types = player_types = 0
+ #   @game = game
   end
 
 def play
   pick_player_types
-  if player_types == 1
+  if @player_types == 1
     while true
       @turns += 1
-      player.human(turns)
+        human(@turns)
     end
-  elsif player_types ==2
+  elsif @player_types ==2
     while true
       @turns += 1
-      if turns.odd?
-        player.human(turns)
-      elsif turns.even?
-        player.computer
+      if @turns.odd?
+        human(@turns)
+      elsif @turns.even?
+        computer
       end
     end
-  elsif player_types == 3
+  elsif @player_types == 3
     while true
-      player.computer
+      computer
     end
   end
 end
@@ -38,29 +45,15 @@ def pick_player_types
   puts
   puts "Enter (1), (2) or (3) to make your selection:"
   @player_types = gets.chomp.to_i
-  until @player_types == (1..3)
+  until @player_types.between?(1,3)
     puts "I'm sorry.  Your entry must be tbe number 1, 2 or 3.  Please select again."
     @player_types == gets.chomp.to_i
   end
 end
-
-#   def play_next_turn(player_types)
-#     if player_types == 1
-#       player.choice (player_types)
-# #      board.status
-#     elsif player_types == 2
-#       turns += 1
-#       if turns.odd?
-#         player.choice(player_types)
-#  #       board.status
-#       elsif turn.even?
-#         player.auto_choice (player_types)
-#       end
-#     elsif player_types == 3
-#       player.auto_choice
-#  #     board.status
-#     end
-#   end
-
-
 end
+
+# x = Game.new
+# y = Player.new
+# z = Board.new
+# zz = TheEnd.new
+# x.play

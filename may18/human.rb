@@ -4,8 +4,8 @@ class Human
 
   attr_accessor :board, :name, :designation
 
-  def initialize (name, designation)
-    @name = name 
+  def initialize (designation)
+#    @name = name 
     @designation = designation
  #   @board = board
   end
@@ -13,12 +13,13 @@ class Human
   def pick(designation)
     # display(board)
 #    board.display
-    puts "Please pick a numbered square: "
+    puts "Player #{designation}, it is your turn.
+    Please pick a numbered square: "
     selection = gets.chomp.to_i
 
-    until board.available? (selection)
-        puts "Space is taken. Please pick another numbered square: "
-        selection = gets.chomp.to_i
-    end
+    # until board.available?(selection, designation)
+    #     puts "Space is taken. Please pick another numbered square: "
+    #     selection = gets.chomp.to_i
   end
+
 end

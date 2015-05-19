@@ -10,12 +10,12 @@ class Human
  #   @board = board
   end
 
-  def pick(board, designation)
+  def pick(designation)
     # display(board)
-    board.display
+#    board.display
     puts "Please pick a numbered square: "
     selection = gets.chomp.to_i
-    
+
     until board.available? (selection)
         puts "Space is taken. Please pick another numbered square: "
         selection = gets.chomp.to_i

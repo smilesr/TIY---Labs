@@ -17,10 +17,13 @@ class TicTacToe
 
   def play
     until @board.win? || @board.tie?
-      move = @player1.pick(@board, @player1.designation)
+      @board.display
+      move = @player1.pick(@player1.designation)
       @board.place_letter(move, @player1.designation) 
-      move2 = @player2.pick(@board, @player2.designation)
+      @board.display
+      move2 = @player2.pick(@player2.designation)
       @board.place_letter(move, @player2.designation)
+      @board.display
     end
   end
 end

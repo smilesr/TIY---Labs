@@ -15,11 +15,12 @@ class Board
   end
 
   def display
-      puts" #{@board[0]}     |     #{@board[1]}     |     #{@board[2]}
-     ---------          -----------           -----------
-           #{@board[3]}     |     #{@board[4]}     |     #{@board[5]}
-     ----------          -----------           -----------
-           #{@board[6]}     |     #{@board[7]}     |     #{@board[8]}"
+      puts"      
+             #{@board[0]}   |     #{@board[1]}     |   #{@board[2]}
+           ------   ------    ------           
+             #{@board[3]}   |     #{@board[4]}     |   #{@board[5]}
+           ------   ------    ------           
+             #{@board[6]}   |     #{@board[7]}     |   #{@board[8]}"
   end
 
   def win?
@@ -34,14 +35,12 @@ class Board
 
 # this function checks for availablity of the square selected and then if available replaces blank with 'x' or 'x'
   def available?(selection, designation)
-    @board.select { |x| x.is_a? Fixnum }.include?(selection)
-      @board[selection-1] = designation
-      puts @board.display
+     @board.select { |x| x.is_a? Fixnum }.include?(selection)     
   end
 
-  # def place_letter (selection, designation)
-  #     @board[selection.to_i - 1] = designation
-  #     @board.display
-  # end    
+  def place_selection_on_board(selection, designation)
+     @board[selection-1] = designation
+     self.display
+  end
 
 end

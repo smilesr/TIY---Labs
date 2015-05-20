@@ -6,7 +6,8 @@ require './tictactoe'
 # x = String.new
 # name = String.new
 # designation = String.new
-
+overall_game_tracker = 1
+while overall_game_tracker == 1
 puts "You are playing tic tac toe."
 puts ""
 puts "Is first player human or computer:"
@@ -34,5 +35,6 @@ elsif x == "Computer"
   player2 = Computer.new(designation)
 end
 
-game_time = TicTacToe.new(player1, player2)
-game_time.play
+game_time = TicTacToe.new(player1, player2, overall_game_tracker)
+overall_game_tracker = game_time.play
+end
